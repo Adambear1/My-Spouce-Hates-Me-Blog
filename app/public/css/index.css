@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap');
+
+
 .icon {
     position: absolute;
     right: 20px !important;
@@ -29,4 +32,8 @@ button .delete:hover {
 }
 button:active {
     transform: scale(.95);
+}
+
+h1 {
+    font-family: 'Bubblegum Sans', cursive !important;
 }

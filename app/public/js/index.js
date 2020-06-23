@@ -24,7 +24,7 @@ $(document).ready(() => {
                             </div>
                             <div class="uk-width-expand">
                                 <h3 class="uk-card-title
-                                    uk-margin-remove-bottom">${rant.name}</h3>
+                                    uk-margin-remove-bottom">${rant.name} - <b>${rant.title}</b></h3>
                                 <p class="uk-text-meta uk-margin-remove-top"><time
                                         datetime="${Date.now()}">${timeStamp(rant.created)}</time></p>
                             </div>
@@ -45,23 +45,24 @@ $(document).ready(() => {
     })
 })
 
-$(document).ready(() => {
-    // var _name = "Adam"
-    // var _img = "imgurl"
-    // var _title = "TITLE"
-    // var _rant = "YOU ROCK!"
-    // fetch("/api/submit", {
-    //     method: "POST",
-    //     headers: {
-    //         Accept: "application/json, text/plain, */*",
-    //         "Content-Type": "application/json"
-    //     },
-    //     body: JSON.stringify({
-    //         name: _name,
-    //         img: _img,
-    //         title: _title,
-    //         rant: _rant,
-    //         created: Date.now()
-    //     })
-    // }).then(res => res.json())
+$('.submit').click(() => {
+    var _name = "Adam"
+    var _img = "imgurl"
+    var _title = $('.title').val()
+    var _rant = $('.rant').val()
+    fetch("/api/submit", {
+        method: "POST",
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            name: _name,
+            img: _img,
+            title: _title,
+            rant: _rant,
+            created: Date.now()
+        })
+    }).then(res => res.json())
 })
+

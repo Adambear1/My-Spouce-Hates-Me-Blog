@@ -23,8 +23,9 @@
                     <span uk-navbar-toggle-icon></span> <span
                         class="uk-margin-small-left">Menu</span>
                 </a>
-                <i class="fa fa-book fa-2x icon"
-                    aria-hidden="true"></i>
+                <a class="icon uk-button uk-button-default" href="#modal-full"
+                    uk-toggle><i class="fa fa-book fa-2x icon"
+                        aria-hidden="true"></i></a>
             </div>
         </nav>
         <!-- Body -->
@@ -34,7 +35,7 @@
             </div>
         </div>
         <!-- Modal -->
-        <a class="uk-button uk-button-default" href="#modal-full" uk-toggle>Open</a>
+        <!-- <a class="uk-button uk-button-default" href="#modal-full" uk-toggle>Open</a> -->
         <div id="modal-full" class="uk-modal-full" uk-modal>
             <div class="uk-modal-dialog">
                 <button class="uk-modal-close-full uk-close-large" type="button"
@@ -45,16 +46,30 @@
                         url('assets/img/miniature-pony-and-girl-toys-1319584.jpg');"
                         uk-height-viewport></div>
                     <div class="uk-padding-large">
-                        <h1>Headline</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit, sed do eiusmod tempor incididunt ut labore et
-                            dolore magna aliqua. Ut enim ad minim veniam, quis
-                            nostrud exercitation ullamco laboris nisi ut aliquip
-                            ex ea commodo consequat. Duis aute irure dolor in
-                            reprehenderit in voluptate velit esse cillum dolore
-                            eu fugiat nulla pariatur. Excepteur sint occaecat
-                            cupidatat non proident, sunt in culpa qui officia
-                            deserunt mollit anim id est laborum.</p>
+                        <h1>Post A Rant!</h1>
+                        <!-- Form -->
+                        <form>
+                            <fieldset class="uk-fieldset"><legend
+                                    class="uk-legend">
+                                    Tell us how you really feel...
+                                </legend>
+
+                                <div class="uk-margin">
+                                    <input class="uk-input title" type="text"
+                                        placeholder="Title of Rant">
+                                </div>
+
+                                <div class="uk-margin">
+                                    <textarea class="uk-textarea rant" rows="5"
+                                        placeholder="Go Ahead, Let it Out..."></textarea>
+                                </div>
+
+
+                                <button class="submit uk-button
+                                    uk-button-primary">Rant!</button>
+                            </fieldset>
+                        </form>
+                        <!--  -->
                     </div>
                 </div>
             </div>
