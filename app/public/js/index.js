@@ -4,6 +4,8 @@ function timeStamp(x) {
 }
 
 $(document).ready(() => {
+    document.innerHTML +=
+        ``
     $.get('/api/all', response => {
 
         console.log(response)
@@ -31,9 +33,9 @@ $(document).ready(() => {
                         <p>${rant.rant}</p>
                     </div>
                     <div class="uk-card-footer">
-                        <button class="uk-button uk-button-default uk-button-small" id="${rant._id}" onClick="favorite()"><i class="fas fa-star star"></i></button>
+                        <button class="uk-button uk-button-default uk-button-small" id="${rant._id}" onClick="favorite_rant()"><i class="fas fa-star star"></i></button>
                         <button class="uk-button uk-button-default uk-button-small"><i class="fas fa-comments comments"></i></button>
-                        <button class="uk-button uk-button-default uk-button-small"><i class="fa fa-pencil-square-o edit" aria-hidden="true"></i></button>
+                        <button class="uk-button uk-button-default uk-button-small" id=${rant._id} uk-toggle="target: #my-id" onClick="popup_edit()"><i class="fa fa-pencil-square-o edit" aria-hidden="true"></i></button>
                         <button class="uk-button uk-button-default uk-button-small" id="${rant._id}" onClick="delete_rant()"><i class="fas fa-trash delete"></i></button>
                     </div>
                 </div>
@@ -89,7 +91,7 @@ $('.submit').click(() => {
 })
 
 //FAVORITES
-function favorite() {
+function favorite_rant() {
     var _name = "Adam"
     var _rant_id = event.target.parentNode.id
     event.target.classList.add('favorite')
@@ -142,15 +144,50 @@ $('.favorite').click(() => {
 })
 //DELETE
 function delete_rant() {
-    var _id = event.target.id
-    console.log(_id)
-    fetch("/api/delete_rant/" + _id, {
-        method: "DELETE"
-
-    }).then(res => res.json())
+    var prelim_id = event.target.id
+    if (prelim_id.length === 0) {
+        var _id = event.target.parentNode.id
+        $.ajax({
+            type: 'DELETE',
+            url: "/api/delete_rant/" + _id,
+            success: function (result) {
+                console.log(result)
+                window.location.reload()
+            }
+        });
+    } else {
+        $.ajax({
+            type: 'DELETE',
+            url: "/api/delete_rant/" + prelim_id,
+            success: function (result) {
+                console.log(result)
+                window.location.reload()
+            }
+        });
+    }
 }
-
-
+//EDIT
+function popup_edit() {
+    var prelim_id = event.target.id;
+    if (prelim_id.length === 0) {
+        var _id = event.target.parentNode.id;
+        $.ajax({
+            type: 'PUT',
+            url: "/api/update_rant/" + _id,
+            success: function (result) {
+                console.log(result)
+            }
+        });
+    } else {
+        $.ajax({
+            type: 'PUT',
+            url: "/api/update_rant/" + prelim_id,
+            success: function (result) {
+                console.log(result)
+            }
+        })
+    };
+}
 
 //TOGGLE NAV OPTIONS
 document.querySelector('#toggle').addEventListener('click', () => {

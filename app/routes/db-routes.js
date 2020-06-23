@@ -48,8 +48,10 @@ module.exports = app => {
             }
         })
     })
+    //Main
     app.delete("/api/delete_rant/:id", (req, res) => {
-        _main_db.rants.remove({ _id: mongojs.ObjectID(req.params.id) }, (err, response) => {
+        let query = { _id: mongojs.ObjectID(req.params.id) }
+        _main_db.rants.remove(query, (err, response) => {
             if (err) {
                 res.send(err)
             } else {
@@ -57,13 +59,14 @@ module.exports = app => {
             }
         })
     })
+    //Favorites
     app.delete("/api/delete_favorite/:id", (req, res) => {
         var id = req.params.id;
         _favorites_db.favorites.remove(id, (err, response) => {
             if (err) {
                 res.send(err)
             } else {
-                res.json(response)
+                res.send(response)
             }
         })
     })
