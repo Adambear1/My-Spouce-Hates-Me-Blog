@@ -1,0 +1,32 @@
+.icon {
+    position: absolute;
+    right: 20px !important;
+}
+
+.icon:hover {
+    cursor: pointer;
+    color: black;
+    transform: scale(1.02);
+}
+
+.background-cover {
+    background-image: url('assets/img/miniature-pony-and-girl-toys-1319584.jpg') !important;
+    object-fit: cover !important;
+    object-position: center !important;
+}
+
+button .star:hover {
+    color: gold
+}
+button .comments:hover {
+    color: rgb(6, 179, 6)
+}
+button .edit:hover {
+    color: gray
+}
+button .delete:hover {
+    color: red
+}
+button:active {
+    transform: scale(.95);
+}
