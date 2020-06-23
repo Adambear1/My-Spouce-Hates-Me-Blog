@@ -21,6 +21,9 @@
 button .star:hover {
     color: gold
 }
+.favorite{
+    color: gold
+}
 button .comments:hover {
     color: rgb(6, 179, 6)
 }
@@ -37,3 +40,16 @@ button:active {
 h1 {
     font-family: 'Bubblegum Sans', cursive !important;
 }
+
+/* Nav Open */
+
+.menu li {
+    /* display: inline; */
+    margin: 20px;
+    display: none;
+}
+
+.show{
+    display: inline !important;
+}
+

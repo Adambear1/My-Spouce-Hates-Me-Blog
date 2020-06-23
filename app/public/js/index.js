@@ -1,9 +1,6 @@
 function timeStamp(x) {
     var d = new Date(x * 1000);
-
-
     return d
-
 }
 
 $(document).ready(() => {
@@ -20,7 +17,7 @@ $(document).ready(() => {
                         <div class="uk-grid-small uk-flex-middle" uk-grid>
                             <div class="uk-width-auto">
                                 <img class="uk-border-circle" width="40"
-                                    height="40" src="https://randomuser.me/api/portraits/${bin == 0 ? "women" : "men"}/${ran}.jpg">
+                                    height="40" src="${rant.img}">
                             </div>
                             <div class="uk-width-expand">
                                 <h3 class="uk-card-title
@@ -34,10 +31,10 @@ $(document).ready(() => {
                         <p>${rant.rant}</p>
                     </div>
                     <div class="uk-card-footer">
-                        <button class="uk-button uk-button-default uk-button-small"><i class="fas fa-star star"></i></button>
+                        <button class="uk-button uk-button-default uk-button-small" id="${rant._id}" onClick="favorite()"><i class="fas fa-star star"></i></button>
                         <button class="uk-button uk-button-default uk-button-small"><i class="fas fa-comments comments"></i></button>
                         <button class="uk-button uk-button-default uk-button-small"><i class="fa fa-pencil-square-o edit" aria-hidden="true"></i></button>
-                        <button class="uk-button uk-button-default uk-button-small"><i class="fas fa-trash delete"></i></button>
+                        <button class="uk-button uk-button-default uk-button-small" id="${rant._id}" onClick="delete_rant()"><i class="fas fa-trash delete"></i></button>
                     </div>
                 </div>
             `
@@ -46,11 +43,57 @@ $(document).ready(() => {
 })
 
 $('.submit').click(() => {
+    var bin = Math.round(Math.random())
+    var ran = Math.floor(Math.random() * 100)
+    if (bin === 0) {
+        let f_array = ["Michelle", "Latisha", "Samantha", "Kerri", "Susan"]
+        var _name = f_array[Math.floor(Math.random() * f_array.length)]
+        var _img = `https://randomuser.me/api/portraits/women/${ran}.jpg`
+        var _title = $('.title').val()
+        var _rant = $('.rant').val()
+        fetch("/api/submit", {
+            method: "POST",
+            headers: {
+                Accept: "application/json, text/plain, */*",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name: _name,
+                img: _img,
+                title: _title,
+                rant: _rant,
+                created: Date.now()
+            })
+        }).then(res => res.json())
+    } else {
+        let m_array = ["Michael", "Josh", "David", "Kevin", "Dominique"]
+        var _name = m_array[Math.floor(Math.random() * m_array.length)]
+        var _img = `https://randomuser.me/api/portraits/men/${ran}.jpg`
+        var _title = $('.title').val()
+        var _rant = $('.rant').val()
+        fetch("/api/submit", {
+            method: "POST",
+            headers: {
+                Accept: "application/json, text/plain, */*",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name: _name,
+                img: _img,
+                title: _title,
+                rant: _rant,
+                created: Date.now()
+            })
+        }).then(res => res.json())
+    }
+})
+
+//FAVORITES
+function favorite() {
     var _name = "Adam"
-    var _img = "imgurl"
-    var _title = $('.title').val()
-    var _rant = $('.rant').val()
-    fetch("/api/submit", {
+    var _rant_id = event.target.parentNode.id
+    event.target.classList.add('favorite')
+    fetch("/api/set_favorite/", {
         method: "POST",
         headers: {
             Accept: "application/json, text/plain, */*",
@@ -58,11 +101,63 @@ $('.submit').click(() => {
         },
         body: JSON.stringify({
             name: _name,
-            img: _img,
-            title: _title,
-            rant: _rant,
-            created: Date.now()
+            rant_id: _rant_id,
+            favorite: true
         })
     }).then(res => res.json())
+}
+//Get all "favorites" and updates DOM to add favorite class to corresponding rants
+$(document).ready(() => {
+    setTimeout(() => {
+        $.get("/api/get_favorites", response => {
+            console.log(response)
+            let i = 0;
+            while (i < response.length) {
+                document.getElementById(`${response[i].rant_id}`).firstChild.classList.add('favorite')
+                i++
+            }
+            // response.map(item => {
+            //     document.getElementById(`${item.rant_id}`).firstChild.classList.add('favorite')
+            //     console.log(document.getElementById(`${item.rant_id}`).firstChild.classList)
+            //     // console.log(document.getElementById(`${item.rant_id}`))
+            // })
+        })
+    }, 100)
 })
+$('.favorite').click(() => {
+    console.log('yes')
+    event.target.classList.remove('favorite');
+    _rant_id = event.target.parentNode.id;
+    fetch("/api/delete_favorite/" + _rant_id, {
+        method: "DELETE",
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            rant_id: _rant_id,
+        })
+    }).then(res => res.json())
+
+})
+//DELETE
+function delete_rant() {
+    var _id = event.target.id
+    console.log(_id)
+    fetch("/api/delete_rant/" + _id, {
+        method: "DELETE"
+
+    }).then(res => res.json())
+}
+
+
+
+//TOGGLE NAV OPTIONS
+document.querySelector('#toggle').addEventListener('click', () => {
+    let i = 0;
+    while (i < document.querySelectorAll('.menu-items').length) {
+        (document.querySelectorAll('.menu-items')[i]).classList.toggle('show')
+        i++
+    }
+});
 
