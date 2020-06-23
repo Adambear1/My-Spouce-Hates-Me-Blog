@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/index.css">
+        <link rel="stylesheet" href="css/menu.css">
         <link rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/css/uikit.min.css"
             />
@@ -26,13 +27,15 @@
                     <ul class="menu">
                         <li class="menu-items" id="home">Home</li>
                         <li class="menu-items" id="favorites">Favorites</li>
-                        <li class="menu-items" id="favorites">Comments</li>
+                        <li class="menu-items" id="comments">Comments</li>
                         <li class="menu-items" id="logIn">Log In</li>
                     </ul>
                 </a>
-                <a class="icon uk-button uk-button-default" href="#modal-full"
-                    uk-toggle><i class="fa fa-book fa-2x icon"
-                        aria-hidden="true"></i></a>
+                <!-- <a class="icon uk-button uk-button-default" href="#modal-full"
+                    uk-toggle> -->
+                <i class="fa fa-book fa-2x icon"
+                    aria-hidden="true"></i>
+                <!-- </a> -->
             </div>
         </nav>
         <!-- Body -->
@@ -87,12 +90,14 @@
         <div id="my-id" uk-modal>
             <div class="uk-modal-dialog uk-modal-body">
                 <h2 class="uk-modal-title">
-                    <fieldset class="uk-fieldset"><legend class="uk-legend">
+                    <fieldset class="uk-fieldset"><legend class="uk-legend
+                            edit-name">
                             Edit:
                         </legend>
 
                         <div class="uk-margin">
-                            <input class="uk-input edit-title" type="text">
+                            <textarea class="uk-textarea edit-title" rows="1"
+                                type="text"></textarea>
                         </div>
 
                         <div class="uk-margin">
@@ -101,7 +106,8 @@
 
 
                         <button class="submit uk-button
-                            uk-button-primary update-rant">Update!</button>
+                            uk-button-primary update-rant"
+                            onClick="edit_rant()">Update!</button>
                     </fieldset>
                 </h2>
             </div>
@@ -111,5 +117,6 @@
         <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="js/index.js"></script>
+        <script src="js/menu.js"></script>
     </body>
 </html>

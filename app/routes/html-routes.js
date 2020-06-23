@@ -8,6 +8,9 @@ module.exports = app => {
         res.sendFile(path.join(__dirname, "../public/author.html"))
     })
     app.get("/login", (req, res) => {
-        res.sendFile(path.join(__dirname, "../public/author.html"))
+        res.sendFile(path.join(__dirname, "../public/login.html"))
+    })
+    app.get("/favorites", (req, res) => {
+        res.sendFile(path.join(__dirname, "../public/favorites.html"))
     })
 }

@@ -1,17 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap');
 
-
-.icon {
-    position: absolute;
-    right: 20px !important;
-}
-
-.icon:hover {
-    cursor: pointer;
-    color: black;
-    transform: scale(1.02);
-}
-
 .background-cover {
     background-image: url('assets/img/miniature-pony-and-girl-toys-1319584.jpg') !important;
     object-fit: cover !important;
@@ -40,16 +28,3 @@ button:active {
 h1 {
     font-family: 'Bubblegum Sans', cursive !important;
 }
-
-/* Nav Open */
-
-.menu li {
-    /* display: inline; */
-    margin: 20px;
-    display: none;
-}
-
-.show{
-    display: inline !important;
-}
-

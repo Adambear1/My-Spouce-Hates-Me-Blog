@@ -1,0 +1,33 @@
+
+.menu li {
+    /* display: inline; */
+    margin: 20px;
+    display: none;
+}
+
+.show{
+    display: inline !important;
+}
+#home:hover {
+    text-decoration: underline;
+}
+#favorites:hover {
+    text-decoration: underline;
+}
+#comments:hover {
+    text-decoration: underline;
+}
+#logIn:hover {
+    text-decoration: underline;
+}
+
+.icon {
+    position: absolute;
+    right: 20px !important;
+}
+
+.icon:hover {
+    cursor: pointer;
+    color: black;
+    transform: scale(1.02);
+}

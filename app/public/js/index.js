@@ -4,8 +4,41 @@ function timeStamp(x) {
 }
 
 $(document).ready(() => {
-    document.innerHTML +=
-        ``
+    document.querySelector('.grid').innerHTML +=
+        `
+        <div class="uk-card uk-card-default uk-grid-collapse uk-child-width-1-2@s uk-margin" uk-grid>
+            <div class="uk-card-media-left uk-cover-container">
+                <img src="assets/img/cartoon_login.jpg" alt="" uk-cover>
+                <canvas width="600" height="400"></canvas>
+            </div>
+            <div>
+                <div class="uk-card-body">
+                <a href='/login'><h3 class="uk-card-title">Create Account 🚗</h3></a>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+                </div>
+            </div>
+        </div>
+    
+        <div class="uk-card uk-card-default uk-grid-collapse uk-child-width-1-2@s uk-margin" uk-grid>
+            <div class="uk-flex-last@s uk-card-media-right uk-cover-container">
+                <img src="assets/img/create_account.jpg" alt="" uk-cover>
+                <canvas width="600" height="400"></canvas>
+            </div>
+            <div>
+                <div class="uk-card-body">
+                    <a href='/login'><h3 class="uk-card-title">Login 🚪</h3></a>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+                </div>
+            </div>
+        </div>
+
+       
+    
+
+    `
+})
+
+$(`#home`).click(() => {
     $.get('/api/all', response => {
 
         console.log(response)
@@ -35,7 +68,7 @@ $(document).ready(() => {
                     <div class="uk-card-footer">
                         <button class="uk-button uk-button-default uk-button-small" id="${rant._id}" onClick="favorite_rant()"><i class="fas fa-star star"></i></button>
                         <button class="uk-button uk-button-default uk-button-small"><i class="fas fa-comments comments"></i></button>
-                        <button class="uk-button uk-button-default uk-button-small" id=${rant._id} uk-toggle="target: #my-id" onClick="popup_edit()"><i class="fa fa-pencil-square-o edit" aria-hidden="true"></i></button>
+                        <button class="uk-button uk-button-default uk-button-small" id="${rant._id}" uk-toggle="target: #my-id" onClick="popup_edit()"><i class="fa fa-pencil-square-o edit" aria-hidden="true"></i></button>
                         <button class="uk-button uk-button-default uk-button-small" id="${rant._id}" onClick="delete_rant()"><i class="fas fa-trash delete"></i></button>
                     </div>
                 </div>
@@ -140,7 +173,6 @@ $('.favorite').click(() => {
             rant_id: _rant_id,
         })
     }).then(res => res.json())
-
 })
 //DELETE
 function delete_rant() {
@@ -172,29 +204,68 @@ function popup_edit() {
     if (prelim_id.length === 0) {
         var _id = event.target.parentNode.id;
         $.ajax({
-            type: 'PUT',
-            url: "/api/update_rant/" + _id,
+            type: 'GET',
+            url: "/api/get_rant/" + _id,
             success: function (result) {
                 console.log(result)
+                document.querySelector('.edit-name').innerHTML += `  ${result.name}'s rant!`
+                document.querySelector('.edit-title').innerHTML += `${result.title}`
+                document.querySelector('.edit-rant').innerHTML += `${result.rant}`
+                document.querySelector('.update-rant').setAttribute('id', result._id)
             }
         });
     } else {
         $.ajax({
-            type: 'PUT',
-            url: "/api/update_rant/" + prelim_id,
+            type: 'POST',
+            url: "/api/get_rant/" + prelim_id,
             success: function (result) {
                 console.log(result)
+                document.querySelector('.edit-name').innerHTML += `  ${result.name}'s rant!`
+                document.querySelector('.edit-title').innerHTML += `${result.title}`
+                document.querySelector('.edit-rant').innerHTML += `${result.rant}`
+                document.querySelector('.update-rant').setAttribute('id', result._id)
             }
         })
     };
 }
 
-//TOGGLE NAV OPTIONS
-document.querySelector('#toggle').addEventListener('click', () => {
-    let i = 0;
-    while (i < document.querySelectorAll('.menu-items').length) {
-        (document.querySelectorAll('.menu-items')[i]).classList.toggle('show')
-        i++
+function edit_rant() {
+    var prelim_id = event.target.id;
+    var _title = document.querySelector('.edit-title').innerHTML
+    var _rant = document.querySelector('.edit-rant').innerHTML
+    var _object =
+    {
+        title: _title,
+        rant: _rant
     }
-});
-
+    if (prelim_id.length === 0) {
+        var _id = event.target;
+        fetch("/api/update_rant/" + _id, {
+            method: "POST",
+            headers: {
+                Accept: "application/json, text/plain, */*",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                _object
+            })
+        }).then((response) => {
+            console.log(response)
+            window.location.reload()
+        })
+    } else {
+        fetch("/api/update_rant/" + prelim_id, {
+            method: "POST",
+            headers: {
+                Accept: "application/json, text/plain, */*",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                _object
+            })
+        }).then((response) => {
+            console.log(response)
+            window.location.reload()
+        })
+    }
+}

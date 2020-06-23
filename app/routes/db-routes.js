@@ -39,6 +39,16 @@ module.exports = app => {
             }
         })
     })
+    app.get("/api/get_rant/:id", (req, res) => {
+        let query = { _id: mongojs.ObjectID(req.params.id) }
+        _main_db.rants.findOne(query, (err, response) => {
+            if (err) {
+                res.send(err)
+            } else {
+                res.json(response)
+            }
+        })
+    })
     app.get("/api/get_favorites", (req, res) => {
         _favorites_db.favorites.find({}, (err, response) => {
             if (err) {
@@ -61,12 +71,29 @@ module.exports = app => {
     })
     //Favorites
     app.delete("/api/delete_favorite/:id", (req, res) => {
-        var id = req.params.id;
-        _favorites_db.favorites.remove(id, (err, response) => {
+        let query = { _id: mongojs.ObjectID(req.params.id) }
+        _favorites_db.favorites.remove(query, (err, response) => {
             if (err) {
                 res.send(err)
             } else {
-                res.send(response)
+                res.json(response)
+            }
+        })
+    })
+    //UPDATE MAIN
+    app.post("/api/update_rant/:id", (req, res) => {
+        let query = { _id: mongojs.ObjectID(req.params.id) }
+        _main_db.rants.update(query, {
+            $set:
+            {
+                title: req.body.title,
+                rant: req.body.rant
+            }
+        }, (err, response) => {
+            if (err) {
+                res.send(err)
+            } else {
+                res.json(response)
             }
         })
     })
